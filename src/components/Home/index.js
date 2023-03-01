@@ -6,41 +6,26 @@ import Login from '../Login'
 
 class Home extends Component {
   state = {
-    element: <Login onclick={this.onLogin} message="Please Login" />,
     loggedIn: false,
   }
 
-  onLogin = () => {
-    this.setState(() => ({
-      element: this.onCreateElement.element,
-      loggedIn: this.onCreateElement.loggedIn,
-    }))
-  }
-
-  onLogout = () => {
-    this.setState(() => ({
-      element: this.onCreateElement.element,
-      loggedIn: this.onCreateElement.loggedIn,
-    }))
-  }
-
   onCreateElement = () => {
-    let {loggedIn, element} = this.state
+    let {loggedIn} = this.state
     if (loggedIn === false) {
       loggedIn = true
-      element = <Logout onclick={this.onLogout} message="Please Login" />
     } else {
       loggedIn = false
-      element = <Login onclick={this.onLogin} message="Welcome User" />
     }
-    return {element, loggedIn}
+    return loggedIn
   }
 
   render() {
-    const {element} = this.state
+    const loggedIn = this.onCreateElement()
     return (
       <div className="bg-container">
-        <div className="card-container">{element}</div>
+        <div className="card-container">
+          {!loggedIn ? <Logout /> : <Login />}
+        </div>
       </div>
     )
   }
